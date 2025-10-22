@@ -1,0 +1,28 @@
+// views/updates.pug
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title= title
+    link(rel='stylesheet', href='../public/css/style.css')
+  body
+    a(href='/') Return to the homepage
+
+    h1 Add New Pet Record
+
+    form(action="/update-cobj", method="POST")
+      div
+        label(for='name') Name (Required String Property):
+        // Name is the required string property
+        input(type='text', id='name', name='name', required)
+      
+      div
+        label(for='species') Species (e.g., Dog, Cat, Bird):
+        input(type='text', id='species', name='species', required)
+      
+      div
+        label(for='favorite_toy') Favorite Toy:
+        input(type='text', id='favorite_toy', name='favorite_toy')
+      
+      button(type='submit') Create Record
