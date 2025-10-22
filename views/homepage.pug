@@ -1,0 +1,36 @@
+// views/homepage.pug
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title= title
+    link(rel='stylesheet', href='./public/css/style.css')
+  body
+    h1 Pet Records
+    // Link to the form (Required in Step 11)
+    a(href='/update-cobj') Add to this table
+
+    if records && records.length > 0
+      table
+        thead
+          tr
+            // Display names of your properties
+            th Name 
+            th Species
+            th Favorite Toy
+            th HubSpot ID
+
+        tbody
+          // Iterates over the custom object records passed from index.js
+          each record in records
+            tr
+              // The property names must match the API names used in index.js: name, species, favorite_toy
+              td= record.properties.name
+              td= record.properties.species
+              td= record.properties.favorite_toy
+              td= record.id
+    else
+      p No records found.
+      if error
+        p There was an error fetching data.
