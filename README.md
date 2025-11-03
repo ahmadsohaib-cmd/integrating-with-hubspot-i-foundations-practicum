@@ -4,7 +4,8 @@ Welcome to the Integrating With HubSpot I: Foundations Practicum.
 
 This repository is for the Integrating With HubSpot I: Foundations course. This practicum is one of two requirements for receiving your Integrating With HubSpot I: Foundations certification. You must also take the exam and receive a passing grade (at least 75%).
 
-To read the full directions, please go to the [practicum instructions](https://academy.hubspot.com/courses/integrating-with-hubspot-foundations#practicum).
+To read the full directions, please go to the practicum instructions, the link is given below:
+(https://academy.hubspot.com/courses/integrating-with-hubspot-foundations#practicum)
 
 ***
 
