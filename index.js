@@ -9,7 +9,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Variables loaded securely from .env file
+// * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
 const PRIVATE_APP_ACCESS = process.env.HUBSPOT_API_KEY;
 const CUSTOM_OBJECT_TYPE = process.env.CUSTOM_OBJECT_TYPE; // Should be "p2_projects1"
 
@@ -21,19 +21,19 @@ const headers = {
 
 // TODO: ROUTE 1 - Homepage to list all custom objects
 app.get('/', async (req, res) => {
-    // FIX: Changed property names to conventional lowercase internal API names (name, author, summary)
+    // FIX: API requests MUST use the lowercase internal property names (name, author, summary)
     const url = `https://api.hubspot.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}?properties=name,author,summary`;
     
     try {
         const resp = await axios.get(url, { headers });
         const data = resp.data.results;
         
-        // Data contains the retrieved records
+        // Pass the data to the homepage template
         res.render('homepage', { title: 'Homepage | HubSpot Practicum', data });
         
     } catch (error) {
         console.error('Error fetching custom objects:', error.response ? error.response.data : error.message);
-        // Render the homepage template, but pass an empty array on error
+        // If error, render homepage with empty data to prevent crash
         res.render('homepage', { title: 'Homepage | HubSpot Practicum', data: [] });
     }
 });
@@ -45,13 +45,11 @@ app.get('/update-cobj', (req, res) => {
 
 // TODO: ROUTE 3 - Handle form POST to create a new custom object
 app.post('/update-cobj', async (req, res) => {
-    // Variables from the form fields (assumes fields are named 'name', 'author', 'summary')
     const { name, author, summary } = req.body;
     
-    // Construct the payload
     const newObject = {
         properties: {
-            // FIX: Property names in the payload MUST use the Internal API Name (assumed lowercase)
+            // FIX: Payload property keys MUST be the lowercase internal names
             "name": name,
             "author": author,
             "summary": summary
@@ -62,7 +60,7 @@ app.post('/update-cobj', async (req, res) => {
     
     try {
         await axios.post(url, newObject, { headers });
-        // Redirect to the homepage after successful creation
+        // Redirect to homepage to see the new record
         res.redirect('/');
         
     } catch (error) {
