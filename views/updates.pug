@@ -9,20 +9,19 @@ html(lang='en')
   body
     a(href='/') Return to the homepage
 
-    h1 Add New Pet Record
+    h1 Add New Project Record
 
     form(action="/update-cobj", method="POST")
       div
-        label(for='name') Name (Required String Property):
-        // Name is the required string property
+        label(for='name') Name (Required):
         input(type='text', id='name', name='name', required)
       
       div
-        label(for='species') Species (e.g., Dog, Cat, Bird):
-        input(type='text', id='species', name='species', required)
+        label(for='summary') Summary:
+        input(type='text', id='summary', name='summary')
       
       div
-        label(for='favorite_toy') Favorite Toy:
-        input(type='text', id='favorite_toy', name='favorite_toy')
+        label(for='project_manager') Project Manager:
+        input(type='text', id='project_manager', name='project_manager')
       
       button(type='submit') Create Record
