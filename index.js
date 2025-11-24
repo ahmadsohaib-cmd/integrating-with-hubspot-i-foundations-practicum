@@ -21,8 +21,8 @@ const headers = {
 
 // TODO: ROUTE 1 - Homepage to list all custom objects
 app.get('/', async (req, res) => {
-    // FIX: API requests MUST use the lowercase internal property names (name, author, summary)
-    const url = `https://api.hubspot.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}?properties=name,author,summary`;
+    // FIX: Using correct internal names: name, summary, project_manager
+    const url = `https://api.hubspot.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}?properties=name,summary,project_manager`;
     
     try {
         const resp = await axios.get(url, { headers });
@@ -45,14 +45,15 @@ app.get('/update-cobj', (req, res) => {
 
 // TODO: ROUTE 3 - Handle form POST to create a new custom object
 app.post('/update-cobj', async (req, res) => {
-    const { name, author, summary } = req.body;
+    // Get the specific fields from the form
+    const { name, summary, project_manager } = req.body;
     
     const newObject = {
         properties: {
-            // FIX: Payload property keys MUST be the lowercase internal names
+            // FIX: Payload keys match the internal API names exactly
             "name": name,
-            "author": author,
-            "summary": summary
+            "summary": summary,
+            "project_manager": project_manager
         }
     };
     
