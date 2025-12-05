@@ -1,27 +1,21 @@
-// views/updates.pug
 doctype html
-html(lang='en')
+html
   head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= title
-    link(rel='stylesheet', href='../public/css/style.css')
   body
-    a(href='/') Return to the homepage
+    h1 Update Book
 
-    h1 Add New Project Record
+    form(action=`/update-book/${book.id}` method="POST")
+      label Title:
+      input(type="text" name="title" value=book.properties.Title)
+      br
 
-    form(action="/update-cobj", method="POST")
-      div
-        label(for='name') Name (Required):
-        input(type='text', id='name', name='name', required)
-      
-      div
-        label(for='summary') Summary:
-        input(type='text', id='summary', name='summary')
-      
-      div
-        label(for='project_manager') Project Manager:
-        input(type='text', id='project_manager', name='project_manager')
-      
-      button(type='submit') Create Record
+      label Author:
+      input(type="text" name="author" value=book.properties.Author)
+      br
+
+      label Summary:
+      input(type="text" name="summary" value=book.properties.Summary)
+      br
+
+      button(type="submit") Update Book
