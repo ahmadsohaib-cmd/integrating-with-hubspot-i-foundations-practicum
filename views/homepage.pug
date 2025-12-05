@@ -1,32 +1,19 @@
-// views/homepage.pug
 doctype html
-html(lang='en')
+html
   head
-    meta(charset='UTF-8')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= title
-    link(rel='stylesheet', href='./public/css/style.css')
   body
-    h1 Project Records
-    // Link to the form
-    a(href='/update-cobj') Add to this table
+    h1 Books List
+    a(href="/add-book") Add New Book
 
-    // Note: We use 'data' here because that is what we passed from index.js
-    if data && data.length > 0
-      table
-        thead
-          tr
-            th Name 
-            th Summary
-            th Project Manager
-            th HubSpot ID
+    table(border="1" cellpadding="8")
+      tr
+        th Title
+        th Author
+        th Summary
 
-        tbody
-          each record in data
-            tr
-              td= record.properties.name
-              td= record.properties.summary
-              td= record.properties.project_manager
-              td= record.id
-    else
-      p No records found.
+      each book in data
+        tr
+          td= book.properties.Title
+          td= book.properties.Author
+          td= book.properties.Summary
