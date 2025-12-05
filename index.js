@@ -1,75 +1,62 @@
 const express = require('express');
 const axios = require('axios');
-require('dotenv').config(); // Load .env variables
+require('dotenv').config();
 
 const app = express();
-
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// * Please DO NOT INCLUDE the private app access token in your repo. Don't do this practicum in your normal account.
 const PRIVATE_APP_ACCESS = process.env.HUBSPOT_API_KEY;
-const CUSTOM_OBJECT_TYPE = process.env.CUSTOM_OBJECT_TYPE; // Should be "p2_projects1"
+const CUSTOM_OBJECT_TYPE = process.env.CUSTOM_OBJECT_TYPE;
 
-// Headers for HubSpot API calls
 const headers = {
     Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
     'Content-Type': 'application/json'
 };
 
-// TODO: ROUTE 1 - Homepage to list all custom objects
+// ROUTE 1: Homepage - list all Books
 app.get('/', async (req, res) => {
-    // FIX: Using correct internal names: name, summary, project_manager
-    const url = `https://api.hubspot.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}?properties=name,summary,project_manager`;
-    
+    const url = `https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}?properties=Title,Author,Summary`;
     try {
         const resp = await axios.get(url, { headers });
         const data = resp.data.results;
-        
-        // Pass the data to the homepage template
-        res.render('homepage', { title: 'Homepage | HubSpot Practicum', data });
-        
-    } catch (error) {
-        console.error('Error fetching custom objects:', error.response ? error.response.data : error.message);
-        // If error, render homepage with empty data to prevent crash
-        res.render('homepage', { title: 'Homepage | HubSpot Practicum', data: [] });
+        res.render('homepage', { title: 'Books | HubSpot Practicum', data });
+    } catch (err) {
+        console.error('Error fetching books:', err.response ? err.response.data : err.message);
+        res.send('Error fetching data');
     }
 });
 
-// TODO: ROUTE 2 - Form to create a new custom object
-app.get('/update-cobj', (req, res) => {
-    res.render('updates', { title: 'Update Custom Object Form | HubSpot Practicum' });
+// ROUTE 2: Form page to create a Book
+app.get('/add-book', (req, res) => {
+    res.render('addbook', { title: 'Add New Book' });
 });
 
-// TODO: ROUTE 3 - Handle form POST to create a new custom object
-app.post('/update-cobj', async (req, res) => {
-    // Get the specific fields from the form
-    const { name, summary, project_manager } = req.body;
-    
-    const newObject = {
+// ROUTE 3: Handle “create Book” form POST
+app.post('/add-book', async (req, res) => {
+    const { title, author, summary } = req.body;
+
+    const newBook = {
         properties: {
-            // FIX: Payload keys match the internal API names exactly
-            "name": name,
-            "summary": summary,
-            "project_manager": project_manager
+            "Title": title,
+            "Author": author,
+            "Summary": summary
         }
     };
-    
-    const url = `https://api.hubspot.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}`;
-    
+
+    const url = `https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_TYPE}`;
+
     try {
-        await axios.post(url, newObject, { headers });
-        // Redirect to homepage to see the new record
+        await axios.post(url, newBook, { headers });
         res.redirect('/');
-        
-    } catch (error) {
-        console.error('Error creating custom object:', error.response ? error.response.data : error.message);
-        res.status(500).send('Error creating record');
+    } catch (err) {
+        console.error('Error creating book:', err.response ? err.response.data : err.message);
+        res.send('Error creating record');
     }
 });
 
-// * Localhost server
+// LOCAL SERVER
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Listening on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Running on http://localhost:${PORT}`));
