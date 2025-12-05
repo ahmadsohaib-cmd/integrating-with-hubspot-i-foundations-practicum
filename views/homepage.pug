@@ -3,17 +3,18 @@ html
   head
     title= title
   body
-    h1 Books List
-    a(href="/add-book") Add New Book
+    h1 All Books
 
-    table(border="1" cellpadding="8")
+    a(href="/update-cobj") Add a New Book
+
+    table(border="1" cellpadding="6")
       tr
         th Title
         th Author
         th Summary
 
-      each book in data
+      each item in data
         tr
-          td= book.properties.Title
-          td= book.properties.Author
-          td= book.properties.Summary
+          td= item.properties.Title
+          td= item.properties.Author
+          td= item.properties.Summary
