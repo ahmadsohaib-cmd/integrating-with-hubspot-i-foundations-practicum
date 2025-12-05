@@ -3,19 +3,22 @@ html
   head
     title= title
   body
-    h1 Update Book
+    h1 Add a New Book
 
-    form(action=`/update-book/${book.id}` method="POST")
+    form(action="/update-cobj" method="POST")
       label Title:
-      input(type="text" name="title" value=book.properties.Title)
+      input(type="text" name="title" required)
       br
 
       label Author:
-      input(type="text" name="author" value=book.properties.Author)
+      input(type="text" name="author" required)
       br
 
       label Summary:
-      input(type="text" name="summary" value=book.properties.Summary)
+      textarea(name="summary" rows="4" required)
       br
 
-      button(type="submit") Update Book
+      button(type="submit") Create Book
+
+    br
+    a(href="/") Back to homepage
