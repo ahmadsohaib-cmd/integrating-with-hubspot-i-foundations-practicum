@@ -5,7 +5,7 @@ This practicum is one of two requirements for receiving your certification.
 You must also take the exam and score at least 75%.
 
 ## Custom Object URL  
-https://app.hubspot.com/object-type-settings/50568581/object/2-54067910
+(https://app.hubspot.com/object-type-settings/50568581/object/2-54067910)
 
 ## Notes  
 Do not add your private app token to this repository.  
