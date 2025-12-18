@@ -3,22 +3,20 @@ html
   head
     title= title
   body
-    h1 Add a New Book
+    h1= title
+    a(href="/") Return to the homepage
 
     form(action="/update-cobj" method="POST")
-      label Title:
+      label(for="title") Name:
       input(type="text" name="title" required)
       br
 
-      label Author:
+      label(for="author") author:
       input(type="text" name="author" required)
       br
 
-      label Summary:
-      textarea(name="summary" rows="4" required)
+      label(for="summary") summary:
+      input(type="text" name="summary" required)
       br
 
-      button(type="submit") Create Book
-
-    br
-    a(href="/") Back to homepage
+      button(type="submit") Submit
